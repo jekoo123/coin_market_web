@@ -59,8 +59,9 @@
       </form>
     </td>
   </tr>
-  {% endfor %} {% else %}
-  <div>No sell_posts</div>
-  {% endif %}
+
+  {% endfor %}
 </table>
-{% endblock %}
+{% else %}
+<div>No sell_posts</div>
+{% endif %} {% endblock %}

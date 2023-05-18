@@ -131,8 +131,6 @@ def sell_coins():
     username = user["username"]
     # return user["coins"]
     user_coins = get_user_coins(user_id)
-
-
     if user_coins >= coins_to_sell:
         sell_post = {
             "user_id": user_id,
@@ -147,6 +145,31 @@ def sell_coins():
 
     return redirect(url_for('index'))
 
+@app.route('/buy_from_seller/<post_id>', methods=['POST'])
+def buy_from_seller(post_id):
+    user_id = session.get('user_id')
+    to_buy = db.sell_posts.find_one({"_id": ObjectId(post_id)})
+    user = db.users.find_one({"_id": ObjectId(to_buy["_id"])})
+    seller_id = user["_id"]
+    money = get_user_money(user_id)
+    cost = to_buy["coins_to_sell"] * to_buy["selling_price"]
+    if money >= cost:
+        new_money = money - cost
+        update_user_money(user_id, new_money)
+        new_coins = get_user_coins(user_id) + to_buy["coins_to_sell"]
+        update_user_coins(user_id, new_coins)
+        new_money_seller = get_user_money(seller_id) + cost
+        update_user_money(seller_id, new_money_seller)
+        new_coins_seller = get_user_coins(seller_id) - to_buy["coins_to_sell"]
+        update_user_coins(seller_id, new_coins_seller)
+
+        to_buy.delete_one({"_id": ObjectId(post_id)})
+        flash("Coins purchased successfully!")
+    else:
+        flash("Not enough money to buy the coins.")
+    return redirect(url_for('index'))
+
+        
 
 @app.route('/add_money', methods=['POST'])
 def add_money():
