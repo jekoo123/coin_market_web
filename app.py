@@ -30,29 +30,35 @@ def update_user_coins(user_id, new_coins):
 def get_marketplace_data():
     return db.marketplace.find_one()
 
-
-
-
 @app.route('/')
 def index():
     user = None
     if session.get('user_id'):
         user = db.users.find_one({"_id": ObjectId(session.get('user_id'))})
-    
+
+    marketplace_data = db.marketplace.find_one()
+    if marketplace_data is None:
+        new_marketplace_data = {
+            "id":0,
+            "coins": 100,
+            "coin_price": 100
+        }
+        db.marketplace.insert_one(new_marketplace_data)
     marketplace_data = db.marketplace.find_one()
     sell_posts = list(db.sell_posts.find())
-    sell_posts_with_usernames = []
-
-    for post in sell_posts:
-        post_owner = db.users.find_one({"_id": post["user_id"]})
-        sell_posts_with_usernames.append({
-            "_id": post["_id"],
-            "username": post_owner["username"],
-            "coins_to_sell": post["coins_to_sell"],
-            "selling_price": post["selling_price"]
-        })
-
-    return render_template('index.html', user=user, marketplace_data=marketplace_data, sell_posts=sell_posts_with_usernames)
+    if not sell_posts :
+            return render_template('index.html', user=user, marketplace_data=marketplace_data, sell_posts=None)
+    else : 
+        sell_posts_with_usernames = []
+        for post in sell_posts:
+            sell_posts_with_usernames.append({
+                "_id": post["_id"],
+                "username": post["username"],
+                "coins_to_sell": post["coins_to_sell"],
+                "selling_price": post["selling_price"]
+            })
+        return render_template('index.html', user=user, marketplace_data=marketplace_data, sell_posts=sell_posts_with_usernames)
+    
 
 
 @app.route('/signup', methods=['GET', 'POST'])
@@ -121,11 +127,16 @@ def sell_coins():
     coins_to_sell = int(request.form['coins_to_sell'])
     selling_price = int(request.form['selling_price'])
     user_id = session.get('user_id')
+    user = db.users.find_one({"_id": ObjectId(user_id)})
+    username = user["username"]
+    # return user["coins"]
     user_coins = get_user_coins(user_id)
+
 
     if user_coins >= coins_to_sell:
         sell_post = {
             "user_id": user_id,
+            "username":username,
             "coins_to_sell": coins_to_sell,
             "selling_price": selling_price
         }
@@ -135,6 +146,7 @@ def sell_coins():
         flash("Not enough coins to sell.")
 
     return redirect(url_for('index'))
+
 
 @app.route('/add_money', methods=['POST'])
 def add_money():
@@ -160,6 +172,9 @@ def withdraw_money():
         flash("Not enough money to withdraw.")
 
     return redirect(url_for('index'))
+
+
+
 
 if __name__ == '__main__':
     app.run(debug=True)
