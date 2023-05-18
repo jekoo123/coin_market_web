@@ -1,62 +1,66 @@
-{% extends 'base.html' %}
+{% extends 'base.html' %} {% block content %} {% if user %}
+<h2>Your Account</h2>
+<p>Balance: {{ user.money }} won</p>
+<p>Coins: {{ user.coins }}</p>
 
-{% block content %}
-    {% if user %}
-        <h2>Your Account</h2>
-        <p>Balance: {{ user.money }} won</p>
-        <p>Coins: {{ user.coins }}</p>
+<form method="post" action="{{ url_for('add_money') }}">
+  <label for="amount_to_add">Add Money (won)</label>
+  <input type="number" name="amount_to_add" required />
+  <input type="submit" value="Add Money" />
+</form>
 
-        <form method="post" action="{{ url_for('add_money') }}">
-            <label for="amount_to_add">Add Money (won)</label>
-            <input type="number" name="amount_to_add" required>
-            <input type="submit" value="Add Money">
-        </form>
+<form method="post" action="{{ url_for('withdraw_money') }}">
+  <label for="amount_to_withdraw">Withdraw Money (won)</label>
+  <input type="number" name="amount_to_withdraw" required />
+  <input type="submit" value="Withdraw Money" />
+</form>
 
-        <form method="post" action="{{ url_for('withdraw_money') }}">
-            <label for="amount_to_withdraw">Withdraw Money (won)</label>
-            <input type="number" name="amount_to_withdraw" required>
-            <input type="submit" value="Withdraw Money">
-        </form>
+<form method="post" action="{{ url_for('buy_coins') }}">
+  <label for="coins_to_buy">Buy Coins</label>
+  <input type="number" name="coins_to_buy" required />
+  <input type="submit" value="Buy Coins" />
+</form>
 
-        <form method="post" action="{{ url_for('buy_coins') }}">
-            <label for="coins_to_buy">Buy Coins</label>
-            <input type="number" name="coins_to_buy" required>
-            <input type="submit" value="Buy Coins">
-        </form>
+<form method="post" action="{{ url_for('sell_coins') }}">
+  <label for="coins_to_sell">Coins to Sell</label>
+  <input type="number" name="coins_to_sell" required />
+  <br />
+  <label for="selling_price">Selling Price per Coin (won)</label>
+  <input type="number" name="selling_price" required />
+  <input type="submit" value="Sell Coins" />
+</form>
+{% endif %}
 
-        <form method="post" action="{{ url_for('sell_coins') }}">
-            <label for="coins_to_sell">Coins to Sell</label>
-            <input type="number" name="coins_to_sell" required>
-            <br>
-            <label for="selling_price">Selling Price per Coin (won)</label>
-            <input type="number" name="selling_price" required>
-            <input type="submit" value="Sell Coins">
-        </form>
-    {% endif %}
+<h2>Marketplace Information</h2>
+<p>Current coin price: {{ marketplace_data["coin_price"] }}</p>
+<p>Available coins: {{ marketplace_data["coins"] }}</p>
 
-    <h2>Marketplace Information</h2>
-    <p>Current coin price: {{ marketplace_data["coin_price"] }}</p>
-    <p>Available coins: {{ marketplace_data["coins"] }}</p>
+<h2>Sell Posts</h2>
 
-    <h2>Sell Posts</h2>
-    <table>
-        <tr>
-            <th>User</th>
-            <th>Coins</th>
-            <th>Selling price per coin</th>
-            <th>Action</th>
-        </tr>
-        {% for post in sell_posts %}
-            <tr>
-                <td>{{ post["username"] }}</td>
-                <td>{{ post["coins_to_sell"] }}</td>
-                <td>{{ post["selling_price"] }}</td>
-                <td>
-                    <form action="{{ url_for('buy_from_seller', post_id=post['_id']) }}" method="post">
-                        <input type="submit" value="Buy All">
-                    </form>
-                </td>
-            </tr>
-        {% endfor %}
-    </table>
+{% if sell_posts %}
+<table>
+  <tr>
+    <th>User</th>
+    <th>Coins</th>
+    <th>Selling price per coin</th>
+    <th>Action</th>
+  </tr>
+  {% for post in sell_posts %}
+  <tr>
+    <td>{{ post["username"] }}</td>
+    <td>{{ post["coins_to_sell"] }}</td>
+    <td>{{ post["selling_price"] }}</td>
+    <td>
+      <form
+        action="{{ url_for('buy_from_seller', post_id=post['_id']) }}"
+        method="post"
+      >
+        <input type="submit" value="Buy All" />
+      </form>
+    </td>
+  </tr>
+  {% endfor %} {% else %}
+  <div>No sell_posts</div>
+  {% endif %}
+</table>
 {% endblock %}
