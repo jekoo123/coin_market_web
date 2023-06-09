@@ -5,13 +5,16 @@ import pymongo
 from flask import Flask, render_template, request, redirect, url_for, flash, session
 from pymongo import MongoClient
 from bson.objectid import ObjectId
+from bson.json_util import dumps
+from datetime import datetime
+
 # from werkzeug.security import generate_password_hash, check_password_hash
 app = Flask(__name__)
 app.secret_key = '1234'
 cluster = MongoClient("mongodb+srv://wprn1116:Z3VuxQrupXHoeoCZ@cluster0.zsnpgns.mongodb.net/?retryWrites=true&w=majority")
 db = cluster["software_engineering"]
 
-# db.marketplace.insert_one({"id":0,"coins" : 100, "coin_price" : 100})
+db.marketplace.insert_one({"id":0,"coins" : 100, "coin_price" : 100})
 
 def get_user_money(user_id):
     user = db.users.find_one({"_id": ObjectId(user_id)})
@@ -47,6 +50,7 @@ def index():
     marketplace_data = db.marketplace.find_one()
     sell_posts = list(db.sell_posts.find())
     if not sell_posts :
+        
             return render_template('index.html', user=user, marketplace_data=marketplace_data, sell_posts=None)
     else : 
         sell_posts_with_usernames = []
@@ -100,7 +104,9 @@ def buy_coins():
     user_id = session.get('user_id')
     money = get_user_money(user_id)
     marketplace_data = get_marketplace_data()
-
+    if session.get('user_id') is None:
+        flash("You need to sign in to buy coins.")
+        return redirect(url_for('signin'))
     if marketplace_data["coins"] >= coins_to_buy:
         cost = coins_to_buy * marketplace_data["coin_price"]
         if money >= cost:
@@ -126,10 +132,13 @@ def buy_coins():
 def sell_coins():
     coins_to_sell = int(request.form['coins_to_sell'])
     selling_price = int(request.form['selling_price'])
+    if session.get('user_id') is None:
+        flash("You need to sign in to sell coins.")
+        return redirect(url_for('signin'))
     user_id = session.get('user_id')
+    
     user = db.users.find_one({"_id": ObjectId(user_id)})
     username = user["username"]
-    # return user["coins"]
     user_coins = get_user_coins(user_id)
     if user_coins >= coins_to_sell:
         sell_post = {
@@ -145,11 +154,14 @@ def sell_coins():
 
     return redirect(url_for('index'))
 
-@app.route('/buy_from_seller/<post_id>', methods=['POST'])
+@app.route('/buy_from_seller/<string:post_id>', methods=['POST'])
 def buy_from_seller(post_id):
+    if session.get('user_id') is None:
+        flash("You need to sign in to buy coins.")
+        return redirect(url_for('signin'))
     user_id = session.get('user_id')
     to_buy = db.sell_posts.find_one({"_id": ObjectId(post_id)})
-    user = db.users.find_one({"_id": ObjectId(to_buy["_id"])})
+    user = db.users.find_one({"_id": ObjectId(to_buy["user_id"])})
     seller_id = user["_id"]
     money = get_user_money(user_id)
     cost = to_buy["coins_to_sell"] * to_buy["selling_price"]
@@ -162,14 +174,19 @@ def buy_from_seller(post_id):
         update_user_money(seller_id, new_money_seller)
         new_coins_seller = get_user_coins(seller_id) - to_buy["coins_to_sell"]
         update_user_coins(seller_id, new_coins_seller)
-
-        to_buy.delete_one({"_id": ObjectId(post_id)})
+        db.sell_posts.delete_one({"_id": ObjectId(post_id)})
+        new_price = (cost + (100-to_buy["coins_to_sell"])*100)/100
+        db.marketplace.update_one({"id":0}, {"$set": {"coin_price": new_price}})
+        db.history.insert_one({"time": datetime.now(), "price": new_price})
         flash("Coins purchased successfully!")
     else:
         flash("Not enough money to buy the coins.")
     return redirect(url_for('index'))
 
-        
+@app.route('/get_coin_price_history', methods=['GET'])
+def get_coin_price_history():
+    price_history = db.coin_price_history.find().sort("time", 1)
+    return dumps(price_history)
 
 @app.route('/add_money', methods=['POST'])
 def add_money():
@@ -196,7 +213,42 @@ def withdraw_money():
 
     return redirect(url_for('index'))
 
+@app.route('/money_screen', methods=['GET'])
+def money_screen():
+    user = None
+    if session.get('user_id'):
+        user = db.users.find_one({"_id": ObjectId(session.get('user_id'))})
+        return render_template('money.html', user=user)
+    else:
+        flash("Login please");
+        return redirect(url_for('signin'))
 
+
+@app.route('/marketplace_screen', methods=['GET'])
+def marketplace_screen():
+    marketplace_data = db.marketplace.find_one()
+    user = db.users.find_one({"_id": ObjectId(session.get('user_id'))})
+    return render_template('marketplace.html', user=user , marketplace_data=marketplace_data)
+    
+@app.route('/sell_post_screen', methods=['GET'])
+def sell_post_screen():
+    sell_posts = list(db.sell_posts.find())
+    if not sell_posts :
+            return render_template('sellpost.html', sell_posts=None)
+    else : 
+        sell_posts_with_usernames = []
+        for post in sell_posts:
+            sell_posts_with_usernames.append({
+                "_id": post["_id"],
+                "username": post["username"],
+                "coins_to_sell": post["coins_to_sell"],
+                "selling_price": post["selling_price"]
+            })
+        return render_template('sellpost.html', sell_posts=sell_posts_with_usernames)
+
+@app.route('/main')
+def main():
+    return redirect(url_for('index'))
 
 
 if __name__ == '__main__':

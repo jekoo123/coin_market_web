@@ -1,0 +1,591 @@
+body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.header_container{
+  display:flex;
+  flex-direction: column;
+  position: fixed;
+  padding:0px;
+  z-index: 3;
+  box-shadow: 2px 2px 5px 0px rgba(0, 0, 0, 0.15);
+  border-right: 0.1px solid black;
+  border-bottom: 0.1px solid black;
+  background-color: white;
+}
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 1260px;
+  height: 100px;
+  background-color: #d8f9ff;
+  padding: 20px 40px;
+  box-shadow: 2px 2px 5px 0px rgba(0, 0, 0, 0.15);
+
+}
+
+.sign_container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin: 0px;
+  height: 60px;
+}
+.link_text {
+  text-decoration: none;
+  letter-spacing: 2px;
+  border-radius: 5px;
+  background-color: white;
+  color:rgb(93, 93, 93);
+
+  padding: 5px 10px;
+  text-align: center;
+  font-size: 20px;
+  margin: 6px 0px;
+  box-shadow: 2px 2px 5px 0px rgba(0, 0, 0, 0.15);
+}
+.message {
+  font-weight: bold;
+  font-style: italic;
+  border-radius: 5px;
+  padding: 5px 10px;
+  text-align: center;
+  font-size: 20px;
+  margin: 6px 0px;
+}
+.banner {
+  width: 1340px;
+  height: 295px;
+  object-fit: cover;
+  margin-top: 260px;
+  margin-bottom: 10px;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+  box-shadow: 2px 2px 5px 0px rgba(0, 0, 0, 0.15);
+}
+.banner_text {
+  position: absolute;
+  top: 310px;
+  color: white;
+  font-size: 45px;
+  font-weight: bold;
+  line-height: 90px;
+  left: 370px;
+}
+
+.user_info_container {
+  background-color: #d8f9ff;
+  padding: 30px 20px;
+  box-shadow: 2px 2px 5px 0px rgba(0, 0, 0, 0.15);
+  width: 1220px;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  margin-top:30px;
+}
+
+.user_info_box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  margin: 10px 20px;
+  box-shadow: 2px 2px 5px 0px rgba(0, 0, 0, 0.15);
+  background-color: beige;
+  padding: 25px;
+  font-size: 20px;
+  border-radius: 10px;
+  height: 200px;
+  width: 250px;
+}
+
+.user_info_title {
+  background-color: rgb(250, 223, 142);
+  margin-bottom: 10px;
+  padding: 5px 10px;
+  border-radius: 10px;
+  font-weight: bold;
+  font-size: 27px;
+  letter-spacing: 2px;
+  margin-bottom: 35px;
+  box-shadow: 2px 2px 5px 0px rgba(0, 0, 0, 0.15);
+}
+.user_info_contents {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: flex-start;
+  width: 210px;
+  height: 90px;
+}
+
+.user_info_contents {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  font-size: 23px;
+}
+
+.form_container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-around;
+  margin: 0px;
+  height: 250px;
+  width: 500px;
+  padding: 40px 20px 10px 20px;
+  border-radius: 5px;
+  box-shadow: 2px 2px 5px 0px rgba(0, 0, 0, 0.15);
+  background-image: url("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS6hDEp5d6jQSQzEWf78zlZL5HkQ1lNMzbob83ij5ZmYGgAW8UN9Sp5JMvGQt5RLrIPkEg&usqp=CAU");
+}
+
+.money_form_container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.handle_money_container {
+  width: 380px;
+  height: 200px;
+  background-color: #d8f9ff;
+  margin-top: 30px;
+  margin-left: 5px;
+  border-radius: 10px;
+  padding: 30px 30px 10px 30px;
+  box-shadow: 2px 2px 5px 0px rgba(0, 0, 0, 0.15);
+}
+.handle_money_title {
+  font-size: 25px;
+  text-align: center;
+  margin-bottom: 15px;
+  text-shadow: 4px 4px 10px rgba(0, 0, 0, 0.3);
+  background-color: #fcf2e2;
+  padding: 5px 0px;
+  border-radius: 10px;
+}
+.handle_money_form {
+  width: 150px;
+  display: inline-block;
+  margin-left: 30px;
+}
+
+.money_label {
+  font-size: 20px;
+  font-style: italic;
+  overflow: hidden;
+}
+.money_label::after {
+  content: "";
+  display: block;
+  height: 10px;
+}
+
+.input {
+  width: 100px;
+  font-size: 20px;
+}
+
+.submit {
+  margin-top: 20px;
+  width: 110px;
+  background-color: rgb(255, 190, 105);
+  font-size: 20px;
+  border-radius: 25px;
+  box-shadow: 2px 2px 5px 0px rgba(0, 0, 0, 0.15);
+  border: 1px solid rgb(255, 164, 72);
+  cursor: pointer;
+  padding: 5px;
+}
+.handle_money_button {
+  width: 450px;
+  height: 230px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  margin-bottom: 30px;
+  padding: 0px 5px;
+  font-size: 50px;
+  font-style: italic;
+  color: white;
+  font-weight: bold;
+  text-shadow: 4px 4px 10px rgba(0, 0, 0, 0.3);
+}
+
+.main_container {
+  width: 1080px;
+  padding: 60px 90px ;
+  display: flex;
+  background-color: hsl(102, 100%, 89%);
+  margin-top: 50px;
+  justify-content: space-between;
+  box-shadow: 2px 2px 5px 0px rgba(0, 0, 0, 0.15);
+  
+}
+
+.cards_container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 400px;
+}
+
+.market_card_container {
+  width: 320px;
+  height: 280px;
+  border-radius: 20px;
+  color: 10px;
+  display: flex;
+  justify-content: center;
+  box-shadow: 2px 2px 5px 0px rgba(0, 0, 0, 0.15);
+  background-color: #a0f5ff;
+  background-image: url("https://cdn-icons-png.flaticon.com/512/3464/3464493.png");
+  color: white;
+  font-size: 45px;
+  font-style: italic;
+  font-weight: bold;
+  text-shadow: 4px 4px 10px rgba(0, 0, 0, 0.3);
+  padding: 20px;
+  margin-bottom: 60px;
+  cursor: pointer;
+}
+
+.sell_card_container {
+  width: 320px;
+  height: 280px;
+  border-radius: 20px;
+  color: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 2px 2px 5px 0px rgba(0, 0, 0, 0.15);
+  background-image: url("https://icon-library.com/images/buy-sell-icon/buy-sell-icon-29.jpg");
+  color: white;
+  font-size: 45px;
+  font-style: italic;
+  font-weight: bold;
+  text-shadow: 4px 4px 10px rgba(0, 0, 0, 0.3);
+  padding: 20px;
+  cursor: pointer;
+}
+
+.main_contents_container {
+  width: 500px;
+  margin-left: 50px;
+  background-color: #d8f9ff;
+  padding: 50px 40px;
+  border-radius: 10px;
+  box-shadow: 2px 2px 5px 0px rgba(0, 0, 0, 0.15);
+}
+
+.contents_container {
+  display: flex;
+  flex-direction: column;
+  align-items: space-between;
+}
+.market_contents_title {
+  font-size: 35px;
+  font-weight: bold;
+  margin-top: 10px;
+  margin-bottom: 50px;
+  text-align: center;
+  text-shadow: 4px 4px 10px rgba(0, 0, 0, 0.3);
+}
+
+.market_contents_contents_container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-size: 25px;
+  border-radius: 10px;
+  background-color: #fcf2e2;
+  padding: 50px 30px 80px 30px;
+  box-shadow: 2px 2px 5px 0px rgba(0, 0, 0, 0.15);
+}
+.market_contents_text {
+  margin-bottom: 20px;
+  font-style: italic;
+  display: flex;
+  justify-content: space-between;
+  width: 350px;
+}
+
+.market_text {
+  background-color: white;
+  padding: 5px 20px;
+  margin-left: 10px;
+  font-style: normal;
+  box-shadow: 2px 2px 5px 0px rgba(0, 0, 0, 0.15);
+}
+
+.market_buy_label {
+  margin-bottom: 30px;
+  padding: 5px 20px;
+  background-color: #d8f9ff;
+  border-radius: 10px;
+  box-shadow: 2px 2px 5px 0px rgba(0, 0, 0, 0.15);
+}
+
+.market_form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: white;
+  border-radius: 10px;
+  box-shadow: 2px 2px 5px 0px rgba(0, 0, 0, 0.15);
+  padding: 30px 20px;
+  margin-top: 25px;
+  width: 250px;
+}
+.sell_label {
+  margin-bottom: 10px;
+}
+
+#price_label {
+  margin-top: 10px;
+}
+
+.sell_form {
+  display: flex;
+  flex-direction: column;
+}
+
+.sell_button {
+  position: relative;
+  left: 230px;
+  bottom: 20px;
+}
+
+.th_container {
+  margin-top:20px;
+  display: flex;
+  justify-content: space-between;
+  width: 350px;
+  margin-bottom: 10px;
+  font-size: 20px;
+  font-weight: bold;
+  text-shadow: 4px 4px 10px rgba(0, 0, 0, 0.3);
+  border-bottom:1px solid black;
+  
+
+}
+.td_container {
+  display: flex;
+  justify-content: space-between;
+  width: 350px;
+  margin-bottom: 10px;
+  font-size: 20px;
+  font-weight: bold;
+  text-shadow: 4px 4px 10px rgba(0, 0, 0, 0.3);
+}
+.scrollable-container {
+  max-height: 300px; 
+  overflow-y: auto; 
+  background-color: #fadcac;
+  padding:0px 30px 20px;
+  border-radius: 10px;
+  box-shadow: 2px 2px 5px 0px rgba(0, 0, 0, 0.15);
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+
+}
+
+.sell_post_submit{
+  background-color: rgb(255, 190, 105);
+  border-radius: 25px;
+
+  box-shadow: 2px 2px 5px 0px rgba(0, 0, 0, 0.15);
+  border: 1px solid rgb(255, 164, 72);
+  cursor: pointer;
+  padding: 0px 7px;
+  font-size:16px;
+  font-weight:bold;
+
+
+}
+.sell_post_screen_container{
+  width:500px;
+  padding:30px;
+  background-color: #d8f9ff;
+  border-radius:10px;
+  margin-top:30px;
+  box-shadow: 2px 2px 5px 0px rgba(0, 0, 0, 0.15);
+  
+}
+
+
+
+/* footer */
+.footer_container {
+  box-shadow: 2px 2px 5px 0px rgba(0, 0, 0, 0.15);
+  width: 1260px;
+  padding: 40px 30px;
+  margin: 50px 0px;
+  background-color: #d8f9ff;
+  height: 200px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+.footer_contents {
+  font-style: italic;
+  font-size: 20px;
+  text-shadow: 4px 4px 10px rgba(0, 0, 0, 0.3);
+
+}
+
+/*로그인*/
+.signin_container {
+  border-radius: 10px;
+  border: 1px solid black;
+  box-shadow: 2px 2px 5px 0px rgba(0, 0, 0, 0.15);
+  padding: 20px 40px 60px;
+
+  width: 400px;
+  margin-top: 30px;
+  margin-bottom: 30px;
+}
+.signin_form_container {
+  display: flex;
+  flex-direction: column;
+}
+.signin_input {
+  display: block;
+  margin-bottom: 30px;
+  font-size: 30px;
+  width: 300px;
+}
+.signin_title {
+  text-shadow: 4px 4px 10px rgba(0, 0, 0, 0.3);
+}
+.signin_label {
+  font-size: 25px;
+  margin-bottom: 20px;
+  text-shadow: 4px 4px 10px rgba(0, 0, 0, 0.3);
+}
+
+.siginin_submit {
+  width: 240px;
+  height: 50px;
+  font-size: 30px;
+  font-weight: bold;
+  background-color: #d8f9ff;
+  border-radius: 10px;
+  box-shadow: 2px 2px 5px 0px rgba(0, 0, 0, 0.15);
+  cursor: pointer;
+  margin-top:20px;
+}
+
+
+/*회원가입*/
+.signup_container {
+  border-radius: 10px;
+  border: 1px solid black;
+  box-shadow: 2px 2px 5px 0px rgba(0, 0, 0, 0.15);
+  padding: 20px 40px 60px;
+  width: 400px;
+  margin-top: 30px;
+  margin-bottom: 30px;
+}
+.signup_form_container {
+  display: flex;
+  flex-direction: column;
+}
+.signup_input {
+  display: block;
+  margin-bottom: 30px;
+  font-size: 30px;
+  width: 300px;
+}
+.signup_title {
+  text-shadow: 4px 4px 10px rgba(0, 0, 0, 0.3);
+}
+.signup_label {
+  font-size: 25px;
+  margin-bottom: 20px;
+  text-shadow: 4px 4px 10px rgba(0, 0, 0, 0.3);
+}
+
+.signup_submit {
+  width: 240px;
+  height: 50px;
+  font-size: 30px;
+  font-weight: bold;
+  background-color: #d8f9ff;
+  border-radius: 10px;
+  box-shadow: 2px 2px 5px 0px rgba(0, 0, 0, 0.15);
+  cursor: pointer;
+  margin-top:20px;
+}
+
+/* 네비 */
+
+.nav{
+  width:900px;
+  padding: 30px 220px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  background-color: hsl(102, 100%, 89%);
+  margin-top:1px;
+}
+
+.nav_text{
+  text-decoration: none;
+  font-size:20px;
+  border-radius: 5px;
+  background-color:#d8f9ff;
+  padding:5px 20px;
+  text-shadow: 4px 4px 10px rgba(0, 0, 0, 0.3);
+  box-shadow: 2px 2px 5px 0px rgba(0, 0, 0, 0.15);
+  color:rgb(93, 93, 93);
+  font-weight: bold;
+
+}
+
+.marketplace_screen_container{
+  background-color: #d8f9ff;
+  border-radius:10px;
+  margin-top:20px;
+  padding:60px;
+
+}
+
+.message_container{
+  position:fixed;
+  top:240px;
+  background-color:black;
+  box-shadow: 2px 2px 5px 0px rgba(0, 0, 0, 0.15);
+  width:1340px;
+  text-align:center
+}
+
+.message_contents{
+  font-size:20px;
+  color:white;
+  font-weight:bold;
+  font-style:italic;
+  text-shadow: 4px 4px 10px rgba(0, 0, 0, 0.3);
+  
+}
+
+.main_title{
+  position:fixed;
+  font-weight: bold;
+  font-size: 50px;
+  z-index:5;
+  color:rgb(51, 51, 51);
+  top:40px;
+  font-style: italic;
+  text-shadow: 4px 4px 10px rgba(0, 0, 0, 0.3);
+  cursor:pointer;
+  text-decoration: none;
+}

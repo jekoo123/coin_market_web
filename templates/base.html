@@ -1,26 +1,75 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
+  <head>
+    <meta charset="UTF-8" />
     <title>Coin Marketplace</title>
-</head>
-<body>
-    {% with messages = get_flashed_messages() %}
-        {% if messages %}
-            <ul>
-                {% for message in messages %}
-                    <li>{{ message }}</li>
-                {% endfor %}
-            </ul>
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/styles.css') }}"
+    />
+  </head>
+  
+  <body style="margin: 0px">
+   
+    
+    <a href="/main" class="main_title">Coin Market Place</a>
+    {% with messages = get_flashed_messages() %} {% if messages %}
+    <div class="message_container">
+      {% for message in messages %}
+      <div class="message_contents">{{ message }}</div>
+      {% endfor %}
+    </div>
+    {% endif %} {% endwith %}
+    <div class="header_container">
+      <div class="header">
+        <a class="logo" href="/main">
+            <img class="logo_img"src="https://assets-global.website-files.com/60f57c496975b84c29335fb7/6215313d693a157d4ed3161e_menu_enjincoin.png" alt="logo" style="width:100px;height:100px;">
+        </a>
+       {% if session.get('user_id') %}
+        <p class="sign_container">
+          <span class="message">Welcome, {{ session['username'] }}!</span>
+          <a class="link_text" href="{{ url_for('signout') }}">로그아웃</a>
+        </p>
+        {% else %}
+        <p class="sign_container">
+          <a class="link_text" href="{{ url_for('signin') }}">로그인</a>
+          <a class="link_text" href="{{ url_for('signup') }}">회원가입</a>
+        </p>
+
         {% endif %}
-    {% endwith %}
+      </div>
 
-    {% if session.get('user_id') %}
-        <p>Welcome, {{ session['username'] }}! <a href="{{ url_for('signout') }}">Sign Out</a></p>
-    {% else %}
-        <p><a href="{{ url_for('signup') }}">Sign Up</a> | <a href="{{ url_for('signin') }}">Sign In</a></p>
-    {% endif %}
+      <div class="nav">
+        <a class="nav_text" href="{{ url_for('money_screen') }}">My Money</a>
+        <a class="nav_text" href="{{ url_for('marketplace_screen') }}"
+          >Market Place</a
+        >
+        <a class="nav_text" href="{{ url_for('sell_post_screen') }}"
+          >Sell Post</a
+        >
+      </div>
+    </div>
 
+    <img
+      src="https://img.freepik.com/free-vector/cryptocurrency-bitcoin-golden-coin-with-digital-circuit-lines-background_1017-33592.jpg"
+      alt="banner"
+      class="banner"
+    />
+    <div class="banner_text">
+      Jekoo, Minseo's <br />
+      Coin Marketplace
+    </div>
     {% block content %}{% endblock %}
-</body>
+    <div class="footer_container">
+      <div class="footer_contents">2017112214 강제구</div>
+      <div class="footer_contents">2021112054 김민서</div>
+      <div class="footer_contents">Dongguk University</div>
+      <div class="footer_contents">Information Communication Engineering</div>
+      <div class="footer_contents">Professor Kim woong seop</div>
+    </div>
+  </body>
+  <script
+    type="text/javascript"
+    src="{{ url_for('static', filename = 'script.js') }}"
+  ></script>
 </html>

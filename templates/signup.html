@@ -1,14 +1,19 @@
 {% extends 'base.html' %}
 
 {% block content %}
-  <h1>Sign Up</h1>
-  <form method="post" action="{{ url_for('signup') }}">
-    <label for="username">Username</label>
-    <input type="text" name="username" required>
+<div class="signup_container">
+  <h1 class="signup_title">Sign Up</h1>
+  <form class="signup_form_container" method="post" action="{{ url_for('signup') }}">
+    <label class="signup_label" for="username">Username</label>
+    <input class="signup_input" type="text" name="username" required>
     <br>
-    <label for="password">Password</label>
-    <input type="password" name="password" required>
+    <label class="signup_label" for="password">Password</label>
+    <input class="signup_input" type="password" name="password" required>
     <br>
-    <input type="submit" value="Sign Up">
+    <input class="signup_submit" type="submit" value="Sign Up">
   </form>
+
+
+</div>
+
 {% endblock %}

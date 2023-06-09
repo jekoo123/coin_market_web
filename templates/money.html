@@ -1,0 +1,50 @@
+{% extends 'base.html' %} 
+
+{% block content %}
+
+<div class="user_info_container">
+  <div class="user_info_box">
+    <div class="user_info_title">Your Account</div>
+    <div class="user_info_contents">
+      <div class="user_info_content">Balance: {{ user.money }} $</div>
+      <div class="user_info_content">Coins: {{ user.coins }}</div>
+    </div>
+  </div>
+  <div class="form_container">
+    <div class="money_form_container">
+      <div class="handle_money_container" id="money_form" style="display: none">
+        <div class="handle_money_title">Money</div>
+        <div class="handle_money_form">
+          <form method="post" action="{{ url_for('add_money') }}">
+            <label class="money_label" for="amount_to_add">Add Money</label>
+            <input
+              class="input"
+              type="number"
+              name="amount_to_add"
+              placeholder="won"
+              required
+            />
+            <input class="submit" type="submit" value="Add" />
+          </form>
+        </div>
+        <div class="handle_money_form">
+          <form method="post" action="{{ url_for('withdraw_money') }}">
+            <label class="money_label" for="amount_to_withdraw">Withdraw</label>
+            <input
+              class="input"
+              type="number"
+              name="amount_to_withdraw"
+              placeholder="won"
+              required
+            />
+            <input class="submit" type="submit" value="Withdraw" />
+          </form>
+        </div>
+      </div>
+      <div class="handle_money_button" onclick="handle_money()">
+        Manage Your Money
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

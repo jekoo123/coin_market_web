@@ -1,0 +1,29 @@
+{% extends 'base.html' %} {% block content %} {% if sell_posts %}
+<div class="sell_post_screen_container">
+  <div class="scrollable-container">
+    <div class="th_container">
+      <div class="th">User</div>
+      <div class="th">Coins</div>
+      <div class="th">Price</div>
+      <div class="th">Action</div>
+    </div>
+    <div class="td_container">
+      {% for post in sell_posts %}
+      <div class="td">{{ post["username"] }}</div>
+      <div class="td">{{ post["coins_to_sell"] }}</div>
+      <div class="td">{{ post["selling_price"] }}</div>
+      <form
+        action="{{ url_for('buy_from_seller', post_id=post['_id']) }}"
+        method="post"
+      >
+        <input class="sell_post_submit"type="submit" value="Buy All" />
+      </form>
+
+      {% endfor %}
+    </div>
+  </div>
+</div>
+
+{% else %}
+<div>No sell_posts</div>
+{% endif %} {% endblock %}

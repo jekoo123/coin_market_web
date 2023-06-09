@@ -1,0 +1,49 @@
+<div style="width: 75%">
+  <canvas id="chart"></canvas>
+</div>
+<script>
+  var data = {
+      labels: [],
+      datasets: [{
+          label: 'Coin Price',
+          data: [],
+          fill: false,
+          borderColor: 'rgb(75, 192, 192)',
+          tension: 0.1
+      }]
+  };
+
+  var config = {
+      type: 'line',
+      data: data,
+      options: {
+          scales: {
+              x: {
+                  type: 'time',
+                  time: {
+                      unit: 'minute'
+                  }
+              }
+          }
+      }
+  };
+
+  var coinChart = new Chart(
+      document.getElementById('chart'),
+      config
+  );
+
+  function addData(chart, label, data) {
+      chart.data.labels.push(label);
+      chart.data.datasets.forEach((dataset) => {
+          dataset.data.push(data);
+      });
+      chart.update();
+  }
+
+  $.getJSON('/get_coin_price_history', function(history){
+      for (let i = 0; i < history.length; i++) {
+          addData(coinChart, new Date(history[i].time.$date), history[i].price);
+      }
+  });
+</script>

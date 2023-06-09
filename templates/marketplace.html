@@ -1,0 +1,27 @@
+{% extends 'base.html' %} {% block content %}
+<div class="marketplace_screen_container">
+  <div class="contents_container" id="market_contents_container">
+    <div class="market_contents_title">Market Place</div>
+    <div class="market_contents_contents_container">
+      <div class="market_contents_text">
+        <span>Current coin price : </span
+        ><span class="market_text">{{ marketplace_data["coin_price"] }}</span>
+      </div>
+      <div class="market_contents_text">
+        <span>Available coins : </span
+        ><span class="market_text">{{ marketplace_data["coins"] }}</span>
+      </div>
+      <form
+        class="market_form"
+        method="post"
+        action="{{ url_for('buy_coins') }}"
+      >
+        <label class="market_buy_label" for="coins_to_buy">Buy Coins</label>
+        <input class="input" type="number" name="coins_to_buy" required />
+        <input class="submit" type="submit" value="Buy Coins" />
+      </form>
+      <!-- {% include 'coin_chart.html' %} -->
+    </div>
+  </div>
+</div>
+{% endblock %}
