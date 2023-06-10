@@ -7,6 +7,8 @@ from pymongo import MongoClient
 from bson.objectid import ObjectId
 from bson.json_util import dumps
 from datetime import datetime
+from flask import jsonify
+
 
 # from werkzeug.security import generate_password_hash, check_password_hash
 app = Flask(__name__)
@@ -15,6 +17,7 @@ cluster = MongoClient("mongodb+srv://wprn1116:Z3VuxQrupXHoeoCZ@cluster0.zsnpgns.
 db = cluster["software_engineering"]
 
 db.marketplace.insert_one({"id":0,"coins" : 100, "coin_price" : 100})
+db.history.insert_one({"history":[]})
 
 def get_user_money(user_id):
     user = db.users.find_one({"_id": ObjectId(user_id)})
@@ -101,12 +104,12 @@ def signout():
 @app.route('/buy_coins', methods=['POST'])
 def buy_coins():
     coins_to_buy = int(request.form['coins_to_buy'])
-    user_id = session.get('user_id')
-    money = get_user_money(user_id)
     marketplace_data = get_marketplace_data()
     if session.get('user_id') is None:
         flash("You need to sign in to buy coins.")
         return redirect(url_for('signin'))
+    user_id = session.get('user_id')
+    money = get_user_money(user_id)
     if marketplace_data["coins"] >= coins_to_buy:
         cost = coins_to_buy * marketplace_data["coin_price"]
         if money >= cost:
@@ -177,16 +180,11 @@ def buy_from_seller(post_id):
         db.sell_posts.delete_one({"_id": ObjectId(post_id)})
         new_price = (cost + (100-to_buy["coins_to_sell"])*100)/100
         db.marketplace.update_one({"id":0}, {"$set": {"coin_price": new_price}})
-        db.history.insert_one({"time": datetime.now(), "price": new_price})
+        db.history.update_one({}, {"$push": {"history": new_price}})
         flash("Coins purchased successfully!")
     else:
         flash("Not enough money to buy the coins.")
     return redirect(url_for('index'))
-
-@app.route('/get_coin_price_history', methods=['GET'])
-def get_coin_price_history():
-    price_history = db.coin_price_history.find().sort("time", 1)
-    return dumps(price_history)
 
 @app.route('/add_money', methods=['POST'])
 def add_money():
@@ -246,10 +244,19 @@ def sell_post_screen():
             })
         return render_template('sellpost.html', sell_posts=sell_posts_with_usernames)
 
+@app.route('/api/history', methods=['GET'])
+def history_data():
+    history_data = db.history.find_one()
+    return jsonify(history_data["history"])
+
+@app.route('/user_manual', methods=['GET'])
+def user_manual():
+    return render_template('manual.html')
+
+
 @app.route('/main')
 def main():
     return redirect(url_for('index'))
-
 
 if __name__ == '__main__':
     app.run(debug=True)
