@@ -49,3 +49,42 @@ function showSellPosts() {
   contentsContainer.style.display = 'none';
   sellPostsContainer.style.display = 'block';
 }
+
+window.onload = function() {
+  if (window.location.pathname === "/sell_post_screen") {
+      $.getJSON('/api/history', function(history_data) {
+          if (history_data.length <= 1) {
+              console.log('No history data');
+              return;
+          }
+          console.log('history data');
+          
+          // get the minimum and maximum values in the history_data
+          let minValue = Math.min(...history_data);
+          let maxValue = Math.max(...history_data);
+          
+          let ctx = document.getElementById('myChart').getContext('2d');
+          let chart = new Chart(ctx, {
+              type: 'line',  // line chart
+              data: {
+                  labels: Array.from({ length: history_data.length }, (_, i) => i+1),  // X-axis labels. Here, it's just 1, 2, 3, ...
+                  datasets: [{
+                      label: 'History',
+                      data: history_data,
+                      backgroundColor: 'green',
+                      borderColor: 'green',
+                      borderWidth: 1
+                  }]
+              },
+              options: {
+                  scales: {
+                      y: {
+                          min: minValue,
+                          max: maxValue
+                      }
+                  }
+              }
+          });
+      });
+  }
+};

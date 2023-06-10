@@ -108,8 +108,8 @@
             <div class="th">Price</div>
             <div class="th">Action</div>
           </div>
+          {% for post in sell_posts %}
           <div class="td_container">
-            {% for post in sell_posts %}
             <div class="td">{{ post["username"] }}</div>
             <div class="td">{{ post["coins_to_sell"] }}</div>
             <div class="td">{{ post["selling_price"] }}</div>
@@ -117,11 +117,11 @@
               action="{{ url_for('buy_from_seller', post_id=post['_id']) }}"
               method="post"
             >
-              <input type="submit" value="Buy All" />
+              <input class="sell_post_submit" type="submit" value="Buy All" />
             </form>
-
-            {% endfor %}
           </div>
+
+          {% endfor %}
         </div>
 
         {% else %}

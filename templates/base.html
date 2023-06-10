@@ -7,6 +7,8 @@
       rel="stylesheet"
       href="{{ url_for('static', filename='css/styles.css') }}"
     />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
   </head>
   
   <body style="margin: 0px">
@@ -40,12 +42,15 @@
       </div>
 
       <div class="nav">
-        <a class="nav_text" href="{{ url_for('money_screen') }}">My Money</a>
+        <a class="nav_text" href="{{ url_for('money_screen') }}">My Account</a>
         <a class="nav_text" href="{{ url_for('marketplace_screen') }}"
           >Market Place</a
         >
         <a class="nav_text" href="{{ url_for('sell_post_screen') }}"
           >Sell Post</a
+        >
+        <a class="nav_text" href="{{ url_for('user_manual') }}"
+          >User Manual</a
         >
       </div>
     </div>
@@ -68,6 +73,7 @@
       <div class="footer_contents">Professor Kim woong seop</div>
     </div>
   </body>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <script
     type="text/javascript"
     src="{{ url_for('static', filename = 'script.js') }}"
