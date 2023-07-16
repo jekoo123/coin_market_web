@@ -8,16 +8,16 @@ from bson.objectid import ObjectId
 from bson.json_util import dumps
 from datetime import datetime
 from flask import jsonify
+import config
 
 
 # from werkzeug.security import generate_password_hash, check_password_hash
 app = Flask(__name__)
 app.secret_key = '1234'
-cluster = MongoClient("mongodb+srv://wprn1116:Z3VuxQrupXHoeoCZ@cluster0.zsnpgns.mongodb.net/?retryWrites=true&w=majority")
+url = config.MONGO_URL
+cluster = MongoClient(url)
 db = cluster["software_engineering"]
 
-db.marketplace.insert_one({"id":0,"coins" : 100, "coin_price" : 100})
-db.history.insert_one({"history":[]})
 
 def get_user_money(user_id):
     user = db.users.find_one({"_id": ObjectId(user_id)})
